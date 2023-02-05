@@ -33,4 +33,19 @@ public class Ranges {
     static Coord getRandomCord() {
         return new Coord(random.nextInt(size.x), random.nextInt(size.y));
     }
+
+    static ArrayList<Coord> getCoordAround(Coord coord) {
+         Coord around;
+         ArrayList<Coord> list = new ArrayList<>();
+         for (int x = coord.x - 1; x <= coord.x + 1; x++) {
+             for (int y = coord.y -1; y <= coord.y + 1; y++) {
+                 if (inRange(around = new Coord(x, y))) {
+                    if (!around.equals(coord)) {
+                        list.add(around);
+                    }
+                 }
+             }
+         }
+         return list;
+    }
 }
