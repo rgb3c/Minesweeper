@@ -40,4 +40,7 @@ class Flag {
         return countOfClosedBoxes;
     }
 
+    void setBombedToBox(Coord coord) {
+        flagMap.set(coord, Box.BOMBED);
+    }
 }
