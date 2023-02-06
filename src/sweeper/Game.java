@@ -31,6 +31,15 @@ public class Game {
 
     public void pressLeftButton(Coord coord) {
         openBox(coord);
+        checkWinner();
+    }
+
+    private void checkWinner() {
+        if (state == getState().PLAYED) {
+            if (flag.getCountOfClosedBoxes() == bomb.getTotalBombs()) {
+                state = GameState.WINNER;
+            }
+        }
     }
 
     private void openBox(Coord coord) {
@@ -45,7 +54,7 @@ public class Game {
                 }
         }
     }
-
+    
     private void openBoxAround(Coord coord) {
         flag.setOpenedToBox(coord);
         for (Coord around : Ranges.getCoordAround(coord)) {
