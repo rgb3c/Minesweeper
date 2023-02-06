@@ -11,11 +11,26 @@ class Flag {
         return flagMap.get(coord);
     }
 
-    public void setOpenedToBox(Coord coord) {
+    void setOpenedToBox(Coord coord) {
         flagMap.set(coord, Box.OPENED);
     }
 
-    public void setFlagedToBox(Coord coord) {
+    void toggleFlagedToBox(Coord coord) {
+        switch (flagMap.get(coord)) {
+            case FLAGED:
+                setCloseToBox(coord);
+                break;
+            case CLOSED:
+                setFlagedToBox(coord);
+                break;
+        }
+    }
+
+    private void setCloseToBox(Coord coord) {
+        flagMap.set(coord, Box.CLOSED);
+    }
+
+    void setFlagedToBox(Coord coord) {
         flagMap.set(coord, Box.FLAGED);
     }
 }
