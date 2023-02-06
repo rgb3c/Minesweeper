@@ -68,11 +68,11 @@ public class JavaSweeper extends JFrame {
     private void initFrame() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Sweeper");
-        setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
         setIconImage(getImage("icon"));
         pack();
+        setLocationRelativeTo(null);
     }
 
     private void setImages() {
