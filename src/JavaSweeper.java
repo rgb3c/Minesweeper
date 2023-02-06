@@ -53,6 +53,9 @@ public class JavaSweeper extends JFrame {
                 if (e.getButton() == MouseEvent.BUTTON3) {
                     game.pressRightButton(coord);
                 } panel.repaint();
+                if (e.getButton() == MouseEvent.BUTTON2) {
+                    game.start();
+                } panel.repaint();
             }
         });
 
