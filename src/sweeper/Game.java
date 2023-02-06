@@ -39,10 +39,17 @@ public class Game {
             case FLAGED: return;
             case CLOSED:
                 switch (bomb.get(coord)) {
-                    case ZERO: return;
+                    case ZERO: openBoxAround(coord); return;
                     case BOMB: return;
                     default: flag.setOpenedToBox(coord); return;
                 }
+        }
+    }
+
+    private void openBoxAround(Coord coord) {
+        flag.setOpenedToBox(coord);
+        for (Coord around : Ranges.getCoordAround(coord)) {
+            openBox(around);
         }
     }
 
