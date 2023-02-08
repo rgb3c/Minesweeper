@@ -15,21 +15,94 @@ public class JavaSweeper extends JFrame {
     private Game game;
     private JPanel panel;
     private JLabel label;
-    private final int COLS = 20;
-    private final int ROWS = 20;
-    private final int BOMBS = 80;
+    private JMenuBar menu;
+    private static int COLS = 9;
+    private static int ROWS = 9;
+    private static int BOMBS = 10;
     private final int IMAGE_SIZE = 50;
+    private static JavaSweeper javaSweeper;
 
     public static void main(String[] args) {
-        new JavaSweeper();
+        javaSweeper = new JavaSweeper();
     }
+
     private JavaSweeper() {
+        menu = new JMenuBar();
+        menu.add(createMenu());
+        setJMenuBar(menu);
         game = new Game(COLS, ROWS, BOMBS);
         game.start();
         setImages();
         initLabel();
         initPanel();
         initFrame();
+    }
+
+    private Component createMenu() {
+        JMenu sizeMenu = new JMenu("Поле");
+        JMenuItem small = new JMenuItem("9х9");
+        JMenuItem normal = new JMenuItem("16х16");
+        JMenuItem big = new JMenuItem("16х30");
+        JMenuItem setBombs = new JMenuItem("Количество бомб");
+
+        sizeMenu.add(small);
+        sizeMenu.add(normal);
+        sizeMenu.add(big);
+        sizeMenu.addSeparator();
+        sizeMenu.add(setBombs);
+
+        small.addActionListener(a -> {
+            resizeGame(9,9, 10);
+        });
+
+        normal.addActionListener(a -> {
+                resizeGame(16,16,40);
+        });
+
+        big.addActionListener(a -> {
+                resizeGame(30,16,99);
+        });
+
+        setBombs.addActionListener(a -> {
+            setBombsAction();
+        });
+
+        return sizeMenu;
+    }
+
+    private void setBombsAction() {
+        JDialog jDialog = new JDialog(javaSweeper, "Количество", true);
+        JButton jButton1 = new JButton("Ок");
+        JTextField jTextField = new JTextField();
+        jDialog.add(jButton1, BorderLayout.SOUTH);
+        jDialog.add(jTextField, BorderLayout.NORTH);
+
+        jButton1.addActionListener(b -> {
+
+                char[] chars = jTextField.getText().toCharArray();
+                StringBuilder sb = new StringBuilder();
+                for (char char1 : chars) {
+                    if (Character.isDigit(char1)) {
+                        sb.append(char1);
+                    }
+                }
+                BOMBS = Integer.parseInt(sb.toString());
+                jDialog.setVisible(false);
+                resizeGame(COLS, ROWS, BOMBS);
+        });
+        
+        jDialog.pack();
+        jDialog.setResizable(false);
+        jDialog.setLocationRelativeTo(null);
+        jDialog.setVisible(true);
+    }
+
+    private static void resizeGame(int newCols, int newRows, int newBombs) {
+        COLS = newCols;
+        ROWS = newRows;
+        BOMBS = newBombs;
+        javaSweeper.setVisible(false);
+        javaSweeper = new JavaSweeper();
     }
 
     private void initLabel() {
