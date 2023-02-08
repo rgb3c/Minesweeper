@@ -36,6 +36,7 @@ class Flag {
     private void setFlagedToBox(Coord coord) {
         flagMap.set(coord, Box.FLAGED);
     }
+
     int getCountOfClosedBoxes() {
         return countOfClosedBoxes;
     }

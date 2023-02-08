@@ -5,6 +5,8 @@ public class Game {
     private Bomb bomb;
     private Flag flag;
     private GameState state;
+    private boolean collision;
+    private int collisionCounter = 0;
 
     public GameState getState() {
         return state;
@@ -17,6 +19,7 @@ public class Game {
     }
 
     public void start() {
+        collision = true;
         bomb.start();
         flag.start();
         state = GameState.PLAYED;
@@ -53,7 +56,9 @@ public class Game {
                 switch (bomb.get(coord)) {
                     case ZERO: openBoxAround(coord); return;
                     case BOMB: openBombs(coord); return;
-                    default: flag.setOpenedToBox(coord); return;
+                    default:
+                        collision = false;
+                        flag.setOpenedToBox(coord); return;
                 }
         }
     }
@@ -73,6 +78,13 @@ public class Game {
     }
 
     private void openBombs(Coord bombed) {
+        while (collision) {
+            System.out.println("collision" + collisionCounter++);
+            start();
+            openBox(bombed);
+            return;
+        }
+
         state = GameState.BOMBED;
         flag.setBombedToBox(bombed);
         for (Coord coord : Ranges.getAllCoords()) {
@@ -85,6 +97,7 @@ public class Game {
     }
 
     private void openBoxAround(Coord coord) {
+        collision = false;
         flag.setOpenedToBox(coord);
         for (Coord around : Ranges.getCoordAround(coord)) {
             openBox(around);

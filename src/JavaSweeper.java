@@ -7,15 +7,17 @@ import sweeper.Box;
 import sweeper.Coord;
 import sweeper.Game;
 import sweeper.Ranges;
+import javax.swing.JFrame;
+import javax.swing.ImageIcon;
 
 public class JavaSweeper extends JFrame {
 
     private Game game;
     private JPanel panel;
     private JLabel label;
-    private final int COLS = 9;
-    private final int ROWS = 9;
-    private final int BOMBS = 10;
+    private final int COLS = 20;
+    private final int ROWS = 20;
+    private final int BOMBS = 80;
     private final int IMAGE_SIZE = 50;
 
     public static void main(String[] args) {
@@ -77,13 +79,13 @@ public class JavaSweeper extends JFrame {
     private String getMessage() {
         switch (game.getState()) {
             case PLAYED:
-                return "Think twice!";
+                return "Let's play";
             case BOMBED:
-                return "YOU LOSE! BIG BA-DA-BOOM!";
+                return "Game over";
             case WINNER:
-                return "CONGRATULATIONS!";
+                return "Win";
             default:
-                return "Welcome!";
+                return "Hello!";
         }
     }
 
