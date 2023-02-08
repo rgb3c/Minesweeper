@@ -39,11 +39,11 @@ public class JavaSweeper extends JFrame {
     }
 
     private Component createMenu() {
-        JMenu sizeMenu = new JMenu("Поле");
+        JMenu sizeMenu = new JMenu("Settings");
         JMenuItem small = new JMenuItem("9х9");
         JMenuItem normal = new JMenuItem("16х16");
         JMenuItem big = new JMenuItem("16х30");
-        JMenuItem setBombs = new JMenuItem("Количество бомб");
+        JMenuItem setBombs = new JMenuItem("Amount bombs");
 
         sizeMenu.add(small);
         sizeMenu.add(normal);
@@ -71,8 +71,8 @@ public class JavaSweeper extends JFrame {
     }
 
     private void setBombsAction() {
-        JDialog jDialog = new JDialog(javaSweeper, "Количество", true);
-        JButton jButton1 = new JButton("Ок");
+        JDialog jDialog = new JDialog(javaSweeper, "Amount", true);
+        JButton jButton1 = new JButton("Ok");
         JTextField jTextField = new JTextField();
         jDialog.add(jButton1, BorderLayout.SOUTH);
         jDialog.add(jTextField, BorderLayout.NORTH);
@@ -90,7 +90,7 @@ public class JavaSweeper extends JFrame {
                 jDialog.setVisible(false);
                 resizeGame(COLS, ROWS, BOMBS);
         });
-        
+
         jDialog.pack();
         jDialog.setResizable(false);
         jDialog.setLocationRelativeTo(null);
