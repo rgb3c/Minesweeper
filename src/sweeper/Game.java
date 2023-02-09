@@ -1,12 +1,20 @@
 package sweeper;
 
 public class Game {
+    public static final String OPEN = "res/sound/open.wav";
+    public static final String FLAG = "res/sound/flag.wav";
+    public static final String BOMB = "res/sound/bomb.wav";
+    public static final String WIN = "res/sound/levelup.wav";
 
     private Bomb bomb;
     private Flag flag;
     private GameState state;
     private boolean collision;
     private int collisionCounter = 0;
+    Audio audioOpen = new Audio();
+    Audio audioFlag = new Audio();
+    Audio audioBomb = new Audio();
+    Audio audioWin = new Audio();
 
     public GameState getState() {
         return state;
@@ -16,6 +24,17 @@ public class Game {
         Ranges.setSize(new Coord(cols, rows));
         bomb = new Bomb(bombs);
         flag = new Flag();
+        initAudio();
+    }
+
+    private void initAudio() {
+        audioOpen.setFile(OPEN);
+        audioFlag.setFile(FLAG);
+        audioBomb.setFile(BOMB);
+        audioWin.setFile(WIN);
+        audioOpen.setVolume(-12.0f);
+        audioBomb.setVolume(-15.0f);
+        audioWin.setVolume(-12.0f);
     }
 
     public void start() {
@@ -43,6 +62,7 @@ public class Game {
     private void checkWinner() {
         if (state == getState().PLAYED) {
             if (flag.getCountOfClosedBoxes() == bomb.getTotalBombs()) {
+                audioWin.play(WIN);
                 state = GameState.WINNER;
             }
         }
@@ -73,8 +93,6 @@ public class Game {
                     }
                 }
             }
-
-
     }
 
     private void openBombs(Coord bombed) {
@@ -86,6 +104,7 @@ public class Game {
         }
 
         state = GameState.BOMBED;
+        audioBomb.play(BOMB);
         flag.setBombedToBox(bombed);
         for (Coord coord : Ranges.getAllCoords()) {
             if (bomb.get(coord) == Box.BOMB) {
@@ -98,6 +117,7 @@ public class Game {
 
     private void openBoxAround(Coord coord) {
         collision = false;
+        audioOpen.play(OPEN);
         flag.setOpenedToBox(coord);
         for (Coord around : Ranges.getCoordAround(coord)) {
             openBox(around);
@@ -108,6 +128,7 @@ public class Game {
         if (gameOver()) {
             return;
         }
+        audioFlag.play(FLAG);
         flag.toggleFlagedToBox(coord);
     }
 
@@ -118,5 +139,11 @@ public class Game {
             start();
             return true;
         }
+    }
+    public void muteAll() {
+        audioOpen.volumeMute();
+        audioFlag.volumeMute();
+        audioBomb.volumeMute();
+        audioWin.volumeMute();
     }
 }

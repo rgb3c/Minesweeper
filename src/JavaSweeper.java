@@ -1,12 +1,17 @@
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.Locale;
+
+import sweeper.*;
 import sweeper.Box;
-import sweeper.Coord;
-import sweeper.Game;
-import sweeper.Ranges;
+
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
 
@@ -44,12 +49,15 @@ public class JavaSweeper extends JFrame {
         JMenuItem normal = new JMenuItem("16х16");
         JMenuItem big = new JMenuItem("16х30");
         JMenuItem setBombs = new JMenuItem("Amount bombs");
+        JMenuItem mute = new JMenuItem("Mute");
 
         sizeMenu.add(small);
         sizeMenu.add(normal);
         sizeMenu.add(big);
         sizeMenu.addSeparator();
         sizeMenu.add(setBombs);
+        sizeMenu.addSeparator();
+        sizeMenu.add(mute);
 
         small.addActionListener(a -> {
             resizeGame(9,9, 10);
@@ -65,6 +73,10 @@ public class JavaSweeper extends JFrame {
 
         setBombs.addActionListener(a -> {
             setBombsAction();
+        });
+
+        mute.addActionListener(a -> {
+            game.muteAll();
         });
 
         return sizeMenu;
