@@ -21,6 +21,9 @@ class Flag {
     void toggleFlagedToBox(Coord coord) {
         switch (flagMap.get(coord)) {
             case FLAGED:
+                setInformToBox(coord);
+                break;
+            case INFORM:
                 setCloseToBox(coord);
                 break;
             case CLOSED:
@@ -31,6 +34,10 @@ class Flag {
 
     private void setCloseToBox(Coord coord) {
         flagMap.set(coord, Box.CLOSED);
+    }
+
+    private void setInformToBox(Coord coord) {
+        flagMap.set(coord, Box.INFORM);
     }
 
     private void setFlagedToBox(Coord coord) {
